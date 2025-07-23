@@ -12,7 +12,6 @@ function Landing(){
             </div>
             <ThreeD/>
             <Categories/>
-            <FooterComponent/>
         </>
     )
 }

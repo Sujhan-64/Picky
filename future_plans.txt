@@ -2,5 +2,14 @@
 2. Product Page
 3. Cart 
 
+
 4. Database structure
-5. 3D MODEL(optional)
+5. Complete UI
+6. USer Authentication ( Firebase)
+7. Security
+8. Refactor
+
+USER Authentication
+-> add forget password
+-> google sign in
+-> more options of sign in

@@ -1,27 +1,120 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Link from "next/link"
-function NavBar(){
-    return(
-        <div className="flex justify-between">
-            <div>
-                <p>ICON</p>
-            </div>
-            <div className="mr-0 flex gap-4 items-center justify-end">
-                <ul className="flex gap-4">
-                    <span>Home</span>
-                    <Link href="/products">
-                        <span>Products</span>
-                    </Link>
-                    <span>Home</span>
-                    <span>Home</span>
-                </ul>
-                <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-            </div>
-            
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Menu, ShoppingCart, LogIn, LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+export default function Navbar({ isLoggedIn, onLoginClick, onLogout, cartCount, onCartClick }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-lg border-b border-gray-200 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-soft-blue-dark to-soft-green-dark bg-clip-text text-transparent">
+              PickyArtZ
+            </h1>
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-6">
+            <Link href="/" className="text-gray-700 hover:text-soft-blue-dark transition-colors">Home</Link>
+            <Link href="/products" className="text-gray-700 hover:text-soft-blue-dark transition-colors">Products</Link>
+            <Link href="/about" className="text-gray-700 hover:text-soft-blue-dark transition-colors">About</Link>
+            <Link href="/contact" className="text-gray-700 hover:text-soft-blue-dark transition-colors">Contact</Link>
+
+            {/* Auth Buttons */}
+            {!isLoggedIn ? (
+              <Button
+                onClick={onLoginClick}
+                className="bg-soft-blue hover:bg-soft-blue-dark text-gray-800 flex items-center gap-2"
+              >
+                <LogIn size={16} />
+                Login
+              </Button>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <Button
+                  onClick={onCartClick}
+                  className="bg-soft-green hover:bg-soft-green-dark text-gray-800 flex items-center gap-2 relative"
+                >
+                  <ShoppingCart size={16} />
+                  Cart
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-soft-red text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
+                </Button>
+                <Button
+                  onClick={onLogout}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <Button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              variant="ghost"
+              size="sm"
+            >
+              <Menu size={20} />
+            </Button>
+          </div>
         </div>
-    )
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-200 py-4">
+            <div className="flex flex-col space-y-3">
+              <Link href="/" className="text-gray-700 hover:text-soft-blue-dark transition-colors px-2">Home</Link>
+              <Link href="/products" className="text-gray-700 hover:text-soft-blue-dark transition-colors px-2">Products</Link>
+              <Link href="/about" className="text-gray-700 hover:text-soft-blue-dark transition-colors px-2">About</Link>
+              <Link href="/contact" className="text-gray-700 hover:text-soft-blue-dark transition-colors px-2">Contact</Link>
+
+              <div className="px-2 pt-2 border-t border-gray-200">
+                {!isLoggedIn ? (
+                  <Button
+                    onClick={onLoginClick}
+                    className="bg-soft-blue hover:bg-soft-blue-dark text-gray-800 flex items-center gap-2 w-full"
+                  >
+                    <LogIn size={16} />
+                    Login
+                  </Button>
+                ) : (
+                  <div className="space-y-2">
+                    <Button
+                      onClick={onCartClick}
+                      className="bg-soft-green hover:bg-soft-green-dark text-gray-800 flex items-center gap-2 relative w-full"
+                    >
+                      <ShoppingCart size={16} />
+                      Cart ({cartCount})
+                    </Button>
+                    <Button
+                      onClick={onLogout}
+                      variant="outline"
+                      className="flex items-center gap-2 w-full"
+                    >
+                      <LogOut size={16} />
+                      Logout
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
 }
-export default NavBar

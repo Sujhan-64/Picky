@@ -7,10 +7,6 @@ export default function ProductClient({ product }) {
   const addToCart = useCartStore((state) => state.addToCart);
   const cart = useCartStore((state) => state.cart);
 
-  useEffect(() => {
-    console.log("Cart items:", cart);
-  }, [cart]);
-
   return (
     <div>
       <div className="max-w-4xl mx-auto p-8">

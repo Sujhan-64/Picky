@@ -12,7 +12,7 @@ export async function GET() {
         const client = await clientPromise
         const db = client.db("data")
         const collection = db.collection("images")
-        const products = await collection.find({},{projection : {_id: 0}}).toArray()
+        const products = await collection.find({},{projection : {}}).toArray()
         return new Response(
             JSON.stringify(products),
             {

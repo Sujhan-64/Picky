@@ -20,12 +20,16 @@ const ProductShow = () => {
     loadProducts();
   }, []);
 
+  const clickProduct = (item) =>{
+    console.log(item._id);
+  }
+
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">🛍 All Products</h1>
       <div className='flex flex-wrap gap-4 justify-center'>
         {products.map((item) => (
-          <Link key={item.slug} href={`/finalProduct/${item.slug}`}>
+          <Link key={item.slug} href={`/finalProduct/${item.slug}`} onClick={() => clickProduct(item)}>
             <div className="w-[250px] h-[320px] bg-white border border-gray-300 rounded-md overflow-hidden shadow hover:shadow-lg transition">
               <div className="relative w-full h-[220px]">
                 <Image

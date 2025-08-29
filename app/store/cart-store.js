@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import {persist} from "zustand/middleware"
+import {shallow} from "zustand/shallow"
 export const useCartStore = create(
     persist((set) => ({
     cart : [],
@@ -14,4 +15,14 @@ export const useCartStore = create(
     )
 )
 
-//need to put functions in useCartStoreActions
+
+//The outer arrow function is used because we are creating a custom react hook. so its a function returning a function
+export const useCart = () => useCartStore((state) => state.cart)
+
+export const useCartActions = () => {
+  const addToCart = useCartStore((state) => state.addToCart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const clearCart = useCartStore((state) => state.clearCart);
+  
+  return { addToCart, removeFromCart, clearCart };
+};

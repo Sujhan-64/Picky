@@ -1,12 +1,13 @@
 "use client";
 import { FaSync, FaTimesCircle } from "react-icons/fa";
-import { useCartStore } from "../store/cart-store";
+import { useCart} from "../store/cart-store";
+import { useCartActions } from "../store/cart-store";
 export default function Cart() {
 
-  const cart = useCartStore((state) => state.cart)
-  const addToCart = useCartStore((state) => state.addToCart)
-  const removeFromCart = useCartStore((state) => state.removeFromCart)
-  const clearCart = useCartStore((state) => state.clearCart)
+  const cart = useCart()
+  const {addToCart} = useCartActions()
+  const {removeFromCart} = useCartActions()
+  const {clearCart} = useCartActions()
 
   return (
     <div className="container mx-auto p-4">

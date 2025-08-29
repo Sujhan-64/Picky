@@ -1,11 +1,12 @@
 "use client";
-import { useCartStore } from "@/app/store/cart-store";
+import { useCart } from "@/app/store/cart-store";
+import { useCartActions } from "@/app/store/cart-store";
 import Button from "@/components/Button";
 import { useEffect } from "react";
 
 export default function ProductClient({ product }) {
-  const addToCart = useCartStore((state) => state.addToCart);
-  const cart = useCartStore((state) => state.cart);
+  const {addToCart} = useCartActions()
+  const cart = useCart();
 
   return (
     <div>

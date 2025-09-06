@@ -3,9 +3,8 @@
 3. Cart 
 
 
-4. Database structure
+4. Database Schema
 5. Complete UI
-6. USer Authentication ( Firebase)
 7. Security
 8. Refactor
 
@@ -13,3 +12,14 @@ USER Authentication
 -> add forget password
 -> google sign in
 -> more options of sign in
+
+ROUTES: 
+-> currently some routes use clientPromise in their route. js but this is not needed since
+   the helper function in db.js indirectly uses a clientPromise thorugh the getDb.
+   Therefore, need to refactor and make all routes consistent and SAME.
+
+~ P.S clientPromise clientPromise holds that one connection promise, so you don’t reconnect to MongoDB every time you run a query.
+
+
+Need to Understand:
+-> Db.js client promise and helper function

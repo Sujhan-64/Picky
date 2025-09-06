@@ -1,6 +1,7 @@
 "use client"
 import React, { useState,useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useUser, useUserActions } from '../store/user-store';
 import {useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
@@ -13,34 +14,48 @@ const UserLogin = () => {
   const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
   const [signInWithEmailAndPassword]  = useSignInWithEmailAndPassword(auth);
   const [user,loading] = useAuthState(auth);
+
+  const {setUid, clearUser} = useUserActions();
+  const {uid} = useUser();
   
   const router = useRouter(); 
 
+  {/*
   React.useEffect(() =>{
       if(user){
         signOut(auth);
+        clearUser();
       }
   },[loading,user,router])
+*/}
 
   const handleSignUp = async () => {
     try {
       const res = await createUserWithEmailAndPassword(email, password);
+      if(res?.user){
+        console.log({res});
+        setUid(res.user.uid);
+        router.push('/getUserDetails')
+      }
+      else{
+        window.alert("Sign Up failed, Please try again")
+      }
       setEmail('');
       setPassword('');
-      console.log({res});
     } catch (error) {
       console.error('Error signing up:', error);
-      // Handle error (e.g., show error message)
     }
   }
+
 
   const handleLogin = async() => {
     try {
       const res = await signInWithEmailAndPassword(email, password);
       setEmail('');
       setPassword('');
-      console.log({res});
       if(res?.user){
+        console.log({res});
+        setUid(res.user.uid);
         router.push('/profile'); // Redirect to home page after successful login
       }
       else{

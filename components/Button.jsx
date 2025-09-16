@@ -4,14 +4,14 @@ const Button = ({onClick, children, ...props}) => {
   return (
     <div>
       <button
-        class="group/button relative inline-flex items-center justify-center overflow-hidden rounded-md bg-blue-900/30 backdrop-blur-lg px-6 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-blue-600/50 border border-white/20"
+        className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-md bg-blue-900/30 backdrop-blur-lg px-6 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-blue-600/50 border border-white/20"
         onClick={onClick} {...props}
         >
-        <span class="text-lg">{children || "Add To Cart"}</span>
+        <span className="text-lg">{children || "Add To Cart"}</span>
         <div
-            class="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]"
+            className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]"
         >
-            <div class="relative h-full w-10 bg-white/30"></div>
+            <div className="relative h-full w-10 bg-white/30"></div>
         </div>
       </button>
     </div>

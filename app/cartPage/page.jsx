@@ -2,6 +2,8 @@
 import { FaSync, FaTimesCircle } from "react-icons/fa";
 import { useCart} from "../store/cart-store";
 import { useCartActions } from "../store/cart-store";
+import { useEffect, useState } from "react";
+import { fetchAllProducts } from "@/lib/fetchAllProducts";
 export default function Cart() {
 
   const cart = useCart()

@@ -2,11 +2,13 @@
 import { useCart } from "@/app/store/cart-store";
 import { useCartActions } from "@/app/store/cart-store";
 import Button from "@/components/Button";
-import { useEffect } from "react";
+import { useUser } from "@/app/store/user-store";
 
 export default function ProductClient({ product }) {
-  const {addToCart} = useCartActions()
+  const {addToCart} = useCartActions();
   const cart = useCart();
+  const {isAuthenticated} = useUser();
+
 
   return (
     <div>
@@ -21,7 +23,15 @@ export default function ProductClient({ product }) {
         <p className="text-gray-700">{product.description || "No description provided."}</p>
       </div>
       <div className="flex justify-center mt-8">
-        <Button onClick={() => addToCart(product)} />
+        <Button onClick={() => {
+          if(!isAuthenticated){
+            window.alert("Plese Login/Sign up first, to access the cart")
+            return;
+          }
+          addToCart(product)
+        }
+         } />
+         {console.log(cart)}
       </div>
     </div>
   );

@@ -2,22 +2,13 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { fetchAllProducts } from '@/lib/fetchAllProducts';
 
 const ProductShow = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    async function loadProducts() {
-      try {
-        const res = await fetch('/api/productShow'); // Make sure this exists
-        const data = await res.json();
-        setProducts(data);
-      } catch (err) {
-        console.error("Failed to load products:", err);
-      }
-    }
-
-    loadProducts();
+    fetchAllProducts().then(setProducts).catch(console.error);
   }, []);
 
   const clickProduct = (item) =>{

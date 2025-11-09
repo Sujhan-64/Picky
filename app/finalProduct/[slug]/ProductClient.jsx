@@ -24,10 +24,12 @@ export default function ProductClient({ product }) {
       </div>
       <div className="flex justify-center mt-8">
         <Button onClick={() => {
+          /*
           if(!isAuthenticated){
             window.alert("Plese Login/Sign up first, to access the cart")
             return;
           }
+          */
           addToCart(product)
         }
          } />

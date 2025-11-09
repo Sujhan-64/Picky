@@ -2,15 +2,21 @@
 import { FaSync, FaTimesCircle } from "react-icons/fa";
 import { useCart} from "../store/cart-store";
 import { useCartActions } from "../store/cart-store";
+import { useUser } from "../store/user-store";
 import { useEffect, useState } from "react";
 import { fetchAllProducts } from "@/lib/fetchAllProducts";
+import updateCartAfterSignedIn from "./updateCartAfterSignedIn";
 export default function Cart() {
 
   const cart = useCart()
   const {addToCart} = useCartActions()
   const {removeFromCart} = useCartActions()
   const {clearCart} = useCartActions()
-
+  const {isAuthenticated} = useUser()
+  const {uid} = useUser();
+  
+  //console.log(localStorage.getItem("cart-storage"))
+  
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-light mb-6">Cart</h1>

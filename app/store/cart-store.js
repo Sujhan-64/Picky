@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {persist} from "zustand/middleware"
+import {persist, createJSONStorage} from "zustand/middleware"
 import {shallow} from "zustand/shallow"
 export const useCartStore = create(
     persist((set) => ({
@@ -10,7 +10,8 @@ export const useCartStore = create(
     }),
     {
         name: "cart-storage",
-        getStorage: () => localStorage,
+        storage: createJSONStorage(() => localStorage),
+        version: 1,
     }
     )
 )

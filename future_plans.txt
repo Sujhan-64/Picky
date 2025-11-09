@@ -1,8 +1,6 @@
 1. Context file
 2. Product Page
 3. Cart 
-
-
 4. Database Schema
 5. Complete UI
 7. Security
@@ -10,11 +8,17 @@
 9. LOADING SCREEN
 10. Caching to improve performance
 11. Cart Repeated product avoidance
-12. Need manage local storage. As of now, uid persists in local storage
+12. Enforce Schemas using Mongoose ORM or something else
+13. Lazy Loading and Suspense needed ??'
+14. Zustand store for pagination
+15. Set local storage uid with expiration
 USER Authentication
 -> add forget password
 -> google sign in
 -> more options of sign in
+
+15. Evaluate need of redis
+16. Evaluate need of cassandra
 
 ROUTES: 
 -> currently some routes use clientPromise in their route. js but this is not needed since
@@ -26,3 +30,16 @@ ROUTES:
 
 Need to Understand:
 -> Db.js client promise and helper function
+
+
+
+OPTIMIZATION PART
+-> what is react-toast?
+-> wrap cart page within for semantic meaning and cohesion
+-> use sanitize for dealing with Security issues
+-> use sessionstorage for authentiication
+
+BUILDING
+
+-> add seperate function for removing duplicates
+-> during checkout, if no of product in cart is more than stoc, handle it

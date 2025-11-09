@@ -24,6 +24,7 @@ export const useUserStore = create(
     )
 )
 
+// custom hook to return corresponding value
 export const useUser = () => {
   const uid = useUserStore((state) => state.uid);
   const name = useUserStore((state) => state.name);
@@ -33,6 +34,7 @@ export const useUser = () => {
   return { uid, name, dob, isAuthenticated };
 };
 
+//Action hooks
 export const useUserActions = () => {
   const setUid = useUserStore((state) => state.setUid);
   const clearUser = useUserStore((state) => state.clearUser);

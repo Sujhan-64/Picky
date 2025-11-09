@@ -4,7 +4,7 @@ const Button = ({onClick, children, ...props}) => {
   return (
     <div>
       <button
-        className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-md bg-blue-900/30 backdrop-blur-lg px-6 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-blue-600/50 border border-white/20"
+        className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-md bg-blue-600/30 backdrop-blur-lg px-6 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-blue-600/50 border border-white/20"
         onClick={onClick} {...props}
         >
         <span className="text-lg">{children || "Add To Cart"}</span>

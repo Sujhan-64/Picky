@@ -16,7 +16,7 @@ export async function PUT(req){
     await db.collection("cart").updateOne(
         {uid},
         {
-            $push : {items : pidArray}
+            $set : {items : pidArray}   //set or push?
         },
         {upsert: true}
     )

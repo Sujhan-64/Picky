@@ -5,7 +5,6 @@ import { useCartActions } from "../store/cart-store";
 import { useUser } from "../store/user-store";
 import { useEffect, useState } from "react";
 import { fetchAllProducts } from "@/lib/fetchAllProducts";
-import updateCartAfterSignedIn from "./updateCartAfterSignedIn";
 export default function Cart() {
 
   const cart = useCart()

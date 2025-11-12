@@ -16,18 +16,20 @@ const UserLogin = () => {
   const [user,loading] = useAuthState(auth);
 
   const {setUid, clearUser} = useUserActions();
-  const {uid} = useUser();
+  //const {uid} = useUser();
   
   const router = useRouter(); 
 
-  {/*
+  {
   React.useEffect(() =>{
       if(user){
-        signOut(auth);
+        setUid(user.uid)
+      }
+      else{
         clearUser();
       }
   },[loading,user,router])
-*/}
+}
 
   const handleSignUp = async () => {
     try {

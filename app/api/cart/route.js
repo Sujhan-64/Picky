@@ -16,7 +16,7 @@ export async function PUT(req){
     await db.collection("cart").updateOne(
         {uid},
         {
-            $set : {items : pidArray}   //set or push?
+            $set : {items : pidArray}
         },
         {upsert: true}
     )
@@ -27,7 +27,7 @@ export async function PUT(req){
 //FETCH A USER'S CART USING UID
 export async function GET(req){
     const userId = req.nextUrl.searchParams.get("userId");
-    const client = await clientPromise();
+    const client = await clientPromise;
     const db = client.db("data");
 
     const cart = await db.collection("cart").findOne({userId})
@@ -37,14 +37,20 @@ export async function GET(req){
     return Response.json({message:"Fetched User cart items"});
 }
 
+//DELETE ENTIRETY OF USER'S CART
 export async function DELETE(req){
-    const userId = await req.json("userId");
-    const client = await clientPromise();
+    const {uid} = await req.json();
+    const client = await clientPromise;
     const db = client.db("data");
+    if (!uid) {
+      return Response.json({ error: "Missing uid" }, { status: 400 });
+    }
 
     await db.collection("cart").updateOne(
-        {userId},
-        {$set : {items : []}}
+        {uid},
+        {
+            $set : {items : []}
+        }
     )
 
     return Response.json({ message: "Cart cleared" });

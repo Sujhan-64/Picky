@@ -12,10 +12,23 @@ export default function Cart() {
   const {removeFromCart} = useCartActions()
   const {clearCart} = useCartActions()
   const {isAuthenticated} = useUser()
+
   const {uid} = useUser();
   
   //console.log(localStorage.getItem("cart-storage"))
   
+  const handleDeleteCart = async() =>{
+    const res = await fetch("/api/cart",{
+        method : "DELETE",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({uid})
+      })
+      
+      if(res.ok){
+        clearCart();
+      }
+  }
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-light mb-6">Cart</h1>
@@ -85,11 +98,11 @@ export default function Cart() {
 
           {/* Clear Cart */}
           <div className="flex justify-end">
-            <button
-              onClick={clearCart}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-            >
-              Clear Cart
+            <button type = "button" className="group relative inline-block text-sm font-medium text-white" href="#" onClick={handleDeleteCart}>
+              <span className="absolute inset-0 border border-red-600"></span>
+              <span className="block border border-red-600 bg-red-600 px-12 py-3 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                Clear cart
+              </span>
             </button>
           </div>
         </div>

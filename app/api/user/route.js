@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function PUT(request) {
   try {
     const body = await request.json();
-    const { uid, name, dob } = body;
+    const { uid, email, userName } = body;
 
     if (!uid) {
       return NextResponse.json(
@@ -16,7 +16,7 @@ export async function PUT(request) {
     }
 
     const collection = await getCollection("user_data");
-    const update = { $set: { uid, name, dob } };
+    const update = { $set: { uid, email, userName } };
     const options = { upsert: true };
 
     const result = await collection.updateOne({ uid }, update, options);

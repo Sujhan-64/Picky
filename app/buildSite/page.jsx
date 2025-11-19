@@ -1,92 +1,10 @@
-"use client"
-import React, { useState,useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useUser, useUserActions } from '../store/user-store';
-import {useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { signOut } from 'firebase/auth';
-import {app,auth} from '../../lib/config';
+'use client';
 
-const UserLogin = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [userName,setuserName] = React.useState('');
+import React, { useState } from 'react';
 
-  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
-  const [signInWithEmailAndPassword]  = useSignInWithEmailAndPassword(auth);
-  const [user,loading] = useAuthState(auth);
-
-  const {setUid, clearUser} = useUserActions();
-  const {uid} = useUser();
-
+export default function AuthForm() {
   const [option, setOption] = useState(1);
 
-  const router = useRouter(); 
-
-  React.useEffect(() =>{
-      if(user){
-        setUid(user.uid)
-      }
-      else{
-        clearUser();
-      }
-  },[loading,user,router])
-
-
-  const handleSignUp = async () => {
-    try {
-      const res = await createUserWithEmailAndPassword(email, password);
-      if(res?.user){
-        console.log({res});
-        setUid(!res?.user?.uid);
-         if(!uid){
-          window.alert("Uid Not found... Please Sign up again");
-          return;
-          }
-
-          const resp = await fetch("/api/user",{
-            method: "PUT",
-            headers : {"Content-Type" : "application/json"},
-            body : JSON.stringify({uid,email,userName})
-          })
-
-          if(!resp.ok){
-            console.log("Error POSTING User data in mongo atlas");
-          }
-      }
-
-      else{
-        window.alert("Sign Up failed, Please try again")
-      }
-
-      router.push('/profile')
-      setEmail('');
-      setPassword('');
-    } catch (error) {
-      console.error('Error signing up:', error);
-    }
-  }
-
-
-  const handleLogin = async() => {
-    try {
-      const res = await signInWithEmailAndPassword(email, password);
-      setEmail('');
-      setPassword('');
-      if(res?.user){
-        console.log({res});
-        setUid(res.user.uid);
-        router.push('/profile'); // Redirect to profile page after successful login
-      }
-      else{
-        window.alert('Login failed, please try again');
-      }
-    } catch (error) {
-      console.error('Error logging in:', error);
-    }
-
-  }
-  
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#4D6FE5] font-sans text-white p-4">
       {/* Load Font - In Next.js proper, you'd usually do this in layout.js or via next/font */}
@@ -111,34 +29,19 @@ const UserLogin = () => {
         <ul className="flex items-center w-full max-w-[350px] mx-auto mb-8">
           <li 
             className={`cursor-pointer transition-opacity duration-200 hover:opacity-100 ${option === 1 ? 'opacity-100 font-bold' : 'opacity-50'}`}
-            onClick={() => {
-                setOption(1)
-                setEmail('');
-                setPassword('');
-              }
-            }
+            onClick={() => setOption(1)}
           >
             Sign in
           </li>
           <li 
             className={`cursor-pointer ml-4 transition-opacity duration-200 hover:opacity-100 ${option === 2 ? 'opacity-100 font-bold' : 'opacity-50'}`}
-            onClick={() => {
-                setOption(2)
-                setEmail('');
-                setPassword('');
-              }
-            }
+            onClick={() => setOption(2)}
           >
             Sign up
           </li>
           <li 
             className={`cursor-pointer ml-auto transition-opacity duration-200 hover:opacity-100 ${option === 3 ? 'opacity-100 font-bold' : 'opacity-50'}`}
-            onClick={() => {
-                setOption(3)
-                setEmail('');
-                setPassword('');
-              }
-            }
+            onClick={() => setOption(3)}
           >
             Forgot
           </li>
@@ -154,7 +57,7 @@ const UserLogin = () => {
           */}
           <div 
             className={`flex flex-col overflow-hidden transition-all duration-400 transition-custom w-full
-              ${option === 1 ? 'max-h-[200px]' : option === 2 ? 'max-h-[280px]' : 'max-h-[140px]'}
+              ${option === 1 ? 'max-h-[140px]' : option === 2 ? 'max-h-[280px]' : 'max-h-[70px]'}
             `}
           >
             {/* Name - visible during sign up */}
@@ -166,7 +69,6 @@ const UserLogin = () => {
               placeholder='Name' 
               required={option === 2} 
               disabled={option !== 2} 
-              onChange={(e) => setuserName(e.target.value)}
             />
 
             {/* Email - Always visible */}
@@ -176,7 +78,6 @@ const UserLogin = () => {
               name='email' 
               type='email' 
               placeholder='E-mail' 
-              onChange={(e) => setEmail(e.target.value)}
               required 
             />
             
@@ -189,7 +90,6 @@ const UserLogin = () => {
               placeholder='Password' 
               required={option === 1 || option === 2} 
               disabled={option === 3} 
-              onChange={(e) => setPassword(e.target.value)}
             />
 
             {/* Repeat Password - Only visible on Sign Up */}
@@ -209,15 +109,22 @@ const UserLogin = () => {
           <button 
             className="mt-4 w-full cursor-pointer rounded border-0 bg-[#5d7ce9] p-4 text-base text-white shadow-sm transition-colors duration-200 hover:bg-[#4261d4] focus:bg-[#3b56bb] focus:outline-none"
             type='submit'
-            onClick={option === 1 ? handleLogin : option === 2 ? handleSignUp : undefined}
-
           >
             {option === 1 ? 'Sign in' : (option === 2 ? 'Sign up' : 'Reset password')}
           </button>
         </form>
+
+        <footer className="fixed bottom-0 left-0 w-full py-8 text-center">
+          <a 
+            href='https://dribbble.com/shots/5041581-Zenbu-Sign-in-up-forgot-page' 
+            target='_blank' 
+            rel="noopener noreferrer"
+            className="text-white/80 font-bold hover:text-white transition-colors text-sm"
+          >
+            Original design with animations by Zenbu
+          </a>
+        </footer>
       </div>
     </div>
   );
-};
-
-export default UserLogin;
+}
